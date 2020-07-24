@@ -13,8 +13,8 @@ import matplotlib.ticker as ticker
 from torch import optim
 from torch.utils.data import DataLoader
 from .language import Lang
-from .decoder import Decoder, AttnDecoderRNN
-from .encoder import Encoder
+from .decoder import *
+from .encoder import *
 
 plt.switch_backend('agg')
 
@@ -43,19 +43,22 @@ class TrainModel:
     self.criterion = nn.NLLLoss()
     self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    print('Model will train in {}'.format(self.device))
 
-  def train(input_tensor, target_tensor, enocder, decoder, encoder_optimizer, decoder_optimizer):
+
+  def train(self, input_tensor, target_tensor, encoder, decoder, \
+            encoder_optimizer, decoder_optimizer):
 
     encoder_optimizer.zero_grad()
     decoder_optimizer.zero_grad()
 
-    enocder_hidden = encoder.init_hidden(input_tensor.shape[0], self.device)
+    encoder_hidden = encoder.init_hidden(input_tensor.shape[0], self.device)
     input_tensor = input_tensor.squeeze(1).to(self.device)
     target_tensor = target_tensor.squeeze(1)
-    encoder_out, enocder_hidden = enocder(input_tensor, enocder_hidden)
+    encoder_out, encoder_hidden = encoder(input_tensor, encoder_hidden)
 
     if encoder.bidirectional:
-      if enocder.rnn == 'LSTM':
+      if encoder.rnn == 'LSTM':
         decoder_hidden = (torch.cat((encoder_hidden[0][0], \
                                     encoder_hidden[1][0]),1).unsqueeze(0),
                           torch.cat((encoder_hidden[0][1], \
@@ -65,22 +68,20 @@ class TrainModel:
     else:
       decoder_hidden = encoder_hidden
     
-    decoder_inputs = torch.tensor([[self.sos_token]], device=device).new_full(\
+    decoder_inputs = torch.tensor([[self.sos_token]], device=self.device).new_full(\
                                   (target_tensor.shape[0], 1), self.sos_token)
 
     output = torch.zeros(len(target_tensor), 1, decoder.output_size)
-    for i in range(len(target_tensor.shape[1])):
+    for i in range(target_tensor.shape[1]):
       decoder_output, decoder_hidden = decoder(decoder_inputs, decoder_hidden)
       topv, topi = decoder_output.topk(1)
       decoder_input = topi.squeeze().detach()
       decoder_input = decoder_input.view(-1,1)
 
-      if i==0:
-        output = decoder_output.unsqueeze(1)
-      else:
-        output = torch.cat((x,y), axis=1)
+      output = decoder_output.unsqueeze(2) if i==0 else torch.cat((output, \
+                                        decoder_output.unsqueeze(2)), axis=2)
 
-    loss = self.criterion(output, target_tensor)
+    loss = self.criterion(output, target_tensor.to(self.device))
 
     loss.backward()
     encoder_optimizer.step()
@@ -89,12 +90,12 @@ class TrainModel:
     return loss.item()
 
 
-  def train_batches(encoder, encoder_optimizer, decoder, decoder_optimizer,\
-                    data_loader):
+  def train_batches(self, encoder, encoder_optimizer, decoder, \
+                    decoder_optimizer, data_loader):
 
     total_loss = 0
 
-    enocder.to(self.device)
+    encoder.to(self.device)
     decoder.to(self.device)
 
     for i, batch in enumerate(data_loader):
@@ -102,21 +103,31 @@ class TrainModel:
                                             batch.shape[2]]).long())
       targets = batch.gather(1, torch.ones([batch.shape[0], 1, \
                                             batch.shape[2]]).long())
-      loss = train(inputs, targets, encoder, decoder, \
-                  encoder_optimizer, decoder_optimizer)
+      total_loss += self.train(inputs, targets, encoder, decoder, \
+                               encoder_optimizer, decoder_optimizer)
+      if i%10 == 0:
+        print('loss of {} batch is {}'.format(i, total_loss))
+    print(total_loss)
 
 
-  def train_epochs(self, enocder, decoder, train_data, dev_data=None):
+  def train_epochs(self, encoder, decoder, train_data, dev_data=None):
 
     train_dataloader = DataLoader(train_data, self.batch_size)
     if dev_data != None:
       dev_dataloader = DataLoader(dev_data, self.batch_size)
     
     encoder_optimizer = optim.Adam(filter(lambda p: p.requires_grad, \
-                                   encoder1.parameters()), lr=learning_rate)
+                                   encoder.parameters()), lr=self.learning_rate)
     decoder_optimizer = optim.Adam(filter(lambda p: p.requires_grad, \
-                                   decoder.parameters()), lr=learning_rate)
+                                   decoder.parameters()), lr=self.learning_rate)
     
-    for epoch in self.epochs:
+    for epoch in range(self.epochs):
       self.train_batches(encoder, encoder_optimizer, decoder, \
                          decoder_optimizer, train_dataloader)
+      # save model after every epoch
+      torch.save({
+        'encoder': encoder1.state_dict(),
+        'decoder': attn_decoder1.state_dict(),
+        'encoder_optimizer': encoder_optimizer.state_dict(),
+        'decoder_optimizer': decoder_optimizer.state_dict()
+        }, '/content/drive/My Drive/Colab Notebooks/nmt_pip.pt')
