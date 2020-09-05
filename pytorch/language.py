@@ -27,7 +27,7 @@ class Lang:
     def add_sentence(self, sentence):
         """split sentence into words"""
 
-        for word in sentence.split(' '):
+        for word in sentence:
             self.add_word(word)
 
 
@@ -51,7 +51,7 @@ class Lang:
         self.n_words = 4
 
         for word in self.word2count.keys():
-            if self.word2count[word] > occurrence:
+            if self.word2count[word] > 0:
                 self.word2index[word] = self.n_words
                 self.index2word[self.n_words] = word
                 self.n_words += 1
