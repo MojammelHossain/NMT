@@ -13,12 +13,12 @@ import matplotlib.ticker as ticker
 from tqdm import tqdm
 from torch import optim
 from torch.utils.data import DataLoader
-from .language import Lang
-from .decoder import *
-from .encoder import *
-from .predict import *
-from .plot import plot
-from .bleu import bleu_score
+from language import Lang
+from decoder import *
+from encoder import *
+from predict import *
+from plot import plot
+from bleu import bleu_score
 
 plt.switch_backend('agg')
 
@@ -137,13 +137,15 @@ class TrainModel:
       decoder.load_state_dict(checkpoint['decoder'])
       encoder_optimizer.load_state_dict(checkpoint['encoder_optimizer'])
       decoder_optimizer.load_state_dict(checkpoint['decoder_optimizer'])
-
+    
+    t = tqdm(range(self.epochs))
     try:
-        for epoch in tqdm(range(self.epochs)):
+        for epoch in t:
 
             loss = self.train_batches(encoder, encoder_optimizer, decoder, \
                                       decoder_optimizer, train_dataloader)
             if (epoch+1) % 10 == 0:
+              t.set_description("loss %s" % loss)
               checkpoint_epoch += 10
               train_predict = pred_.predict_dataset(encoder, decoder, train_data)
               if dev_data is None:

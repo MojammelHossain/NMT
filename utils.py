@@ -1,7 +1,7 @@
 """Copyright"""
 import copy
 import numpy as np
-from .language import Lang
+from language import Lang
 
 class Helper:
     """helper class for reading data and create word bank"""
@@ -36,7 +36,7 @@ class Helper:
 
         # Split every line into pairs
         pairs = [[s for s in l.split('\t')] for l in lines]
-        print("Total %s sentence pairs" % len(pairs))
+        print("Total %s sentence pairs\n" % len(pairs))
 
 
         # Reverse pairs, make Lang instances
@@ -93,9 +93,8 @@ class Helper:
         """prepare data for model"""
 
         pairs = self.filter_pairs(pairs)
-        print("Trimmed to %s sentence pairs as per max_length" % len(pairs))
+        print("Trimmed to %s sentence pairs as per max_length\n" % len(pairs))
 
-        print("Counting words...")
         for pair in pairs:
             self.input_lang.add_sentence(pair[0])
             self.output_lang.add_sentence(pair[1])

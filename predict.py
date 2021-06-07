@@ -12,9 +12,9 @@ import matplotlib.ticker as ticker
 
 from torch import optim
 from torch.utils.data import DataLoader
-from .language import Lang
-from .decoder import *
-from .encoder import *
+from language import Lang
+from decoder import *
+from encoder import *
 from tqdm import tqdm
 
 plt.switch_backend('agg')
