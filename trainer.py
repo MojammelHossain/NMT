@@ -16,7 +16,8 @@ from torch.utils.data import DataLoader
 from language import Lang
 from decoder import *
 from encoder import *
-from predict import *
+from evaluation import *
+from utils import save_model
 from plot import plot
 from bleu import bleu_score
 
@@ -126,6 +127,7 @@ class TrainModel:
     decoder_optimizer = optim.Adam(filter(lambda p: p.requires_grad, \
                                    decoder.parameters()), lr=self.learning_rate)
     checkpoint_epoch=0
+    total_epoch = 0
     train_score=[0]
     val_score=[0]
 
@@ -138,13 +140,13 @@ class TrainModel:
       encoder_optimizer.load_state_dict(checkpoint['encoder_optimizer'])
       decoder_optimizer.load_state_dict(checkpoint['decoder_optimizer'])
     
-    t = tqdm(range(self.epochs))
+    t = tqdm(range(1, self.epochs+1))
     try:
         for epoch in t:
 
             loss = self.train_batches(encoder, encoder_optimizer, decoder, \
                                       decoder_optimizer, train_dataloader)
-            if (epoch+1) % 10 == 0:
+            if (epoch) % 10 == 0:
               t.set_description("loss %s" % loss)
               checkpoint_epoch += 10
               train_predict = pred_.predict_dataset(encoder, decoder, train_data)
@@ -154,29 +156,13 @@ class TrainModel:
                 dev_predict = pred_.predict_dataset(encoder, decoder, dev_data)
                 train_score.append(bleu_score(train_predict[1], train_predict[0]))
                 val_score.append(bleu_score(dev_predict[1], dev_predict[0]))
-                plot(train_scor=train_score, val_scor=val_score, \
-                     epoch=checkpoint_epoch)
-              torch.save({
-                  'epochs': checkpoint_epoch+total_epoch,
-                  'encoder': encoder.state_dict(),
-                  'decoder': decoder.state_dict(),
-                  'encoder_optimizer': encoder_optimizer.state_dict(),
-                  'decoder_optimizer': decoder_optimizer.state_dict()
-                }, self.path)
+                plot(train_scor=train_score, val_scor=val_score, epoch=checkpoint_epoch)
+              
+              path = self.path + "/model" + str(total_epoch+epoch) +".pt"
+              save_model(checkpoint_epoch+total_epoch, encoder, decoder, encoder_optimizer, decoder_optimizer, path)
     except KeyboardInterrupt:
         # Code to "save"
         print('save model')
-        torch.save({
-            'epochs': checkpoint_epoch+total_epoch,
-            'encoder': encoder.state_dict(),
-            'decoder': decoder.state_dict(),
-            'encoder_optimizer': encoder_optimizer.state_dict(),
-            'decoder_optimizer': decoder_optimizer.state_dict()
-          }, self.path)
-    torch.save({
-            'epochs': checkpoint['epochs']+self.epochs,
-            'encoder': encoder.state_dict(),
-            'decoder': decoder.state_dict(),
-            'encoder_optimizer': encoder_optimizer.state_dict(),
-            'decoder_optimizer': decoder_optimizer.state_dict()
-          }, self.path)
+        save_model(checkpoint_epoch+total_epoch, encoder, decoder, encoder_optimizer, decoder_optimizer, path)
+    path = self.path+"/model" + str(total_epoch+self.epochs) +".pt"
+    save_model(total_epoch+self.epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, path)

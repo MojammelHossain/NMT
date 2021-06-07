@@ -8,8 +8,9 @@ from decoder import Decoder
 from language import Lang
 from utils import Helper
 from trainer import TrainModel
-from predict import Predict
+from evaluation import Predict
 from string import punctuation
+
 
 MAX_LENGTH = 10
 # add missing bangla punctuation
@@ -57,5 +58,5 @@ if __name__ == "__main__":
                   bidirectional=True)
 
     pred_= Predict(MAX_LENGTH, input_lang, output_lang, helper, 8000)
-    train = TrainModel(MAX_LENGTH, input_lang.sos_token, batch_size=8000, epochs=20, learning_rate=0.0001, path="/content", snapshot=None)
+    train = TrainModel(MAX_LENGTH, input_lang.sos_token, batch_size=8000, epochs=20, learning_rate=0.0001, path="/content/snap", snapshot='/content/snap/model10.pt')
     train.train_epochs(encoder,decoder, train_data, dev_data, pred_)

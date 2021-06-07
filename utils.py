@@ -3,6 +3,15 @@ import copy
 import numpy as np
 from language import Lang
 
+def save_model(epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, path):
+  torch.save({
+            'epochs': epochs,
+            'encoder': encoder.state_dict(),
+            'decoder': decoder.state_dict(),
+            'encoder_optimizer': encoder_optimizer.state_dict(),
+            'decoder_optimizer': decoder_optimizer.state_dict()
+          }, self.path)
+
 class Helper:
     """helper class for reading data and create word bank"""
 
