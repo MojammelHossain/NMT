@@ -1,0 +1,164 @@
+Forgive Tom.	টমকে ক্ষমা করে দাও।
+He can come.	উনি আসতে পারেন।
+He can read.	সে পড়তে পারে।
+He stood up.	সে উঠে দাঁড়ালো।
+How are you?	তুই কেমন আছিস?
+I am taller.	আমি বেশি লম্বা।
+I like both.	আমার দুটোই পছন্দ।
+I like cake.	আমি কেক পছন্দ করি।
+I like math.	আমি অঙ্ক পছন্দ করি।
+I like rice.	আমি ভাত পছন্দ করি।
+I live here.	আমি এখানে বাস করি।
+I need help.	আমার সাহায্য দরকার।
+I need time.	আমার সময় দরকার।
+I trust Tom.	আমি টমকে বিশ্বাস করি।
+I want more.	আমার আরো চাই।
+I want this.	আমার এটা চাই।
+I'll scream.	আমি চেঁচাবো।
+I'm 17, too.	আমিও ১৭।
+I'm a woman.	আমি একজন মহিলা।
+I'm dancing.	আমি নাচছি।
+I'm healthy.	আমি সুস্থ।
+I'm not Tom.	আমি টম নই।
+I'm reading.	আমি পড়ছি।
+I'm talking.	আমি কথা বলছি।
+I'm thirsty.	আমার তেষ্টা পেয়েছে।
+Is Tom here?	টম কি এখানে আছে?
+Is Tom home?	টম কি বাড়িতে আছে?
+Is Tom well?	টম কি ভালো আছে?
+Is that all?	অার কিছু?
+It can't be!	এটা হতে পারে না!
+It can't be!	হতেই পারে না!
+It may snow.	বরফ পরতে পারে।
+Look at Tom.	টমের দিকে তাকান।
+Look at Tom.	টমের দিকে তাকাও।
+Many thanks.	অনেক ধন্যবাদ।
+That's mine.	ওটা আমার।
+They yelled.	তারা চিৎকার করলো।
+This is new.	এটা নতুন।
+Tom frowned.	টম ভ্রূকুটি করলো।
+Tom got mad.	টম রেগে গেছিলো।
+Tom inhaled.	টম নিশ্বাস ছাড়লো।
+Tom is dead.	টম মৃত।
+Are we ready?	আমরা কি তৈরি?
+Are you sick?	আপনি কি অসুস্থ?
+Are you sick?	তুমি কি অসুস্থ?
+Are you sure?	তুমি নিশ্চিত তো?
+Are you sure?	আপনি নিশ্চিত তো?
+Can you read?	আপনি পড়তে পারেন?
+Can you read?	তুমি পড়তে পারো?
+Come outside.	বাইরে আসো।
+Come outside.	বাইরে আসুন।
+Come with me.	আমার সাথে এসো।
+Come with me.	আমার সঙ্গে আসুন।
+Come with me.	আমার সঙ্গে আস।
+Drive slowly.	আস্তে গাড়ি চালান।
+Drive slowly.	আস্তে গাড়ি চালাও।
+Ghosts exist.	ভুত আছে।
+Good evening.	শুভ সন্ধ্যা।
+Good morning.	সুপ্রভাত।
+Grab my hand.	আমার হাতটা ধরুন।
+Grab my hand.	আমার হাতটা ধরো।
+He got angry.	সে রেগে গেছিলো।
+He got angry.	তিনি রেগে গেছিলেন।
+He got angry.	উনি রেগে গেছিলেন।
+He got angry.	ইনি রেগে গেছিলেন।
+He got angry.	ও রেগে গেছিলো।
+He is eating.	উনি খাচ্ছেন।
+He is eating.	তিনি খাচ্ছেন।
+He is eating.	সে খাচ্ছে।
+He is eating.	ও খাচ্ছে।
+Hold my hand.	আমার হাতটা ধরুন।
+Hold my hand.	আমার হাতটা ধরো।
+I don't care.	আমি পরোয়া করি না।
+I don't know.	আমি জানি না।
+I drink beer.	আমি বিয়ার খাই।
+I teach here.	আমি এখানে পড়াই।
+I understand.	আমি বুঝি।
+I was amazed.	আমি অবাক হয়ে গেছিলাম।
+I will fight.	আমি লড়বো।
+I won't come.	আমি আসবো না।
+I won't lose!	আমি হারবো না।
+I'll be late.	আমার দেরী হবে।
+I'm a doctor.	আমি ডাক্তার।
+I'm a doctor.	আমি একজন ডাক্তার।
+I'm pregnant.	আমি গর্ভবতী।
+I'm speaking.	আমি কথা বলছি।
+I'm too busy.	আমি খুব ব্যস্থ আছি।
+I've seen it.	আমি এটা দেখেছি।
+I've seen it.	আমি ওটা দেখেছি।
+Is Tom there?	টম কি ওখানে আছে?
+It's too low.	খুব নিচু।
+It's too low.	এটা খুব নিচু।
+Let go of me.	আমাকে ছেড়ে দিন।
+Let go of me.	আমাকে ছেড়ে দাও।
+Let me speak.	আমাকে বলতে দাও।
+Let me speak.	আমাকে কথা বলতে দাও।
+Let me speak.	আমাকে বলতে দিন।
+Let me speak.	আমাকে কথা বলতে দিন।
+Let's review.	পুনর্বিচার করা যাক।
+My arm hurts.	আমার হাত ব্যাথা করছে।
+My feet hurt.	আমার পা ব্যাথা করছে।
+My hip hurts.	আমার কোমর ব্যাথা করছে।
+My jaw hurts.	আমার মারি ব্যাথা করছে।
+Now fix that.	এবার ওটা ঠিক করো।
+Now fix that.	এবার ওটা ঠিক করুন।
+Please hurry.	একটু তারাতারি করুন।
+Please hurry.	একটু তারাতারি করো।
+Someone came.	কেউ একজন এসেছিলেন।
+Someone came.	কেউ এসেছিলো।
+Stay at home.	বাড়িতেই থাকুন।
+Stay at home.	বাড়িতে থাকো।
+Step outside.	বাইরে আসো।
+Step outside.	বাইরে আসুন।
+Stop yelling.	চিৎকার করা বন্ধ করো।
+Stop yelling.	চিৎকার করা বন্ধ করুন।
+Stop yelling.	চেঁচানো বন্ধ করুন।
+Stop yelling.	চেঁচানো বন্ধ করো।
+That is mine.	ওটা আমার।
+This is mine.	এটা আমার।
+Tom has died.	টম মারা গেছে।
+Tom has time.	টমের হাতে সময় আছে।
+Tom is there.	টম ওখানে আছে।
+Tom is tired.	টম ক্লান্ত।
+Tom listened.	টম শুনলো।
+Tom loves me.	টম আমাকে ভালোবাসে।
+Tom saw them.	টম তাদের দেখলো।
+Tom saw them.	টম ওদের দেখলো।
+Tom saw them.	টম ওনাদের দেখলো।
+Tom screamed.	টম চিৎকার করলো।
+Tom screamed.	টম চেঁচালো।
+Tom wants me.	টমের আমাকে চায়।
+Tom'll speak.	টম কথা বলবে।
+Tom's coming.	টম আসছে।
+Tom's crying.	টম কাঁদছে।
+Tom's famous.	টম বিখ্যাত।
+Tom's strong.	টম শক্তিশালী।
+Unbelievable!	অবিশ্বাস্য!
+Wait outside.	বাইরে অপেক্ষা করুন।
+Wait outside.	বাইরে অপেক্ষা করো।
+Was Tom here?	টম কি এখানে ছিলো?
+We apologize.	আমরা ক্ষমা চাইছি।
+We are Arabs.	আমরা আরব।
+We live here.	আমরা এখানে থাকি।
+We sat there.	আমরা ওখানে বসেছিলাম।
+We'll scream.	আমরা চিৎকার করবো।
+We'll scream.	আমরা চেঁচাবো।
+My neck hurts.	আমার ঘাড় ব্যাথা করছে।
+No, thank you.	না, ধন্যবাদ।
+See you later.	আবার পরে দেখা হবে।
+See you there.	ওখানে দেখা হবে।
+Send me there.	আমাকে ওখানে পাঠান।
+She got angry.	সে রেগে গেছিলো।
+She is eating.	উনি খাচ্ছেন।
+She's my wife.	ও আমার স্ত্রী।
+Somebody came.	কেউ একজন এসেছিলেন।
+Speak clearly.	পরিষ্কার করে বলুন।
+Stop shouting.	চিৎকার করা বন্ধ করো।
+Take us there.	আমাদের ওখানে নিয়ে চলুন।
+That's my cat.	ওটা আমার বিড়াল।
+They screamed.	তারা চিৎকার করলো।
+Tom came here.	টম এখানে এলো।
+Tom got angry.	টম রেগে গেছিলো।
+Tom hesitated.	টম ইতস্তত করলো।
+Tom is inside.	টম ভেতরে।
