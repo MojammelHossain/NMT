@@ -43,7 +43,7 @@ class TrainModel:
     self.batch_size = kargs['batch_size'] if 'batch_size' in kargs.keys() else 1
     self.epochs = kargs['epochs'] if 'epochs' in kargs.keys() else 1
     self.path = kargs['path'] if 'path' in kargs.keys() else 'C:/'
-    self.snapshot = kargs['snapshot'] if 'snapshot' in kargs.keys() else None
+    self.snapshot = kargs['snapshot']
     self.criterion = nn.NLLLoss()
     self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

@@ -3,8 +3,21 @@ import copy
 import numpy as np
 from language import Lang
 
+
+def initialize_env(config):
+    config['batch_size'] = int(config['batch_size'])
+    config['bidirectional'] = True if config['bidirectional'] == 'true' else False
+    config['checkpoint'] = False if config['checkpoint'] == 'false' else config['checkpoint']
+    config['reverse'] = True if config['reverse'] == 'true' else False
+    config['rnn'] = 'LSTM' if config['rnn'] == 'lstm' else 'GRU'
+    config['max_length'] = int(config['max_length'])
+    config['epochs'] = int(config['epochs'])
+    config['learning_rate'] = float(config['learning_rate'])
+    config['hidden_size'] = int(config['hidden_size'])
+    return config
+
 def save_model(epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, path):
-  torch.save({
+    torch.save({
             'epochs': epochs,
             'encoder': encoder.state_dict(),
             'decoder': decoder.state_dict(),

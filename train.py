@@ -3,16 +3,16 @@ import re
 import copy
 import torch
 import spacy
+import configparser
+from utils import *
+from language import Lang
 from encoder import Encoder
 from decoder import Decoder
-from language import Lang
-from utils import Helper
 from trainer import TrainModel
 from evaluation import Predict
 from string import punctuation
 
 
-MAX_LENGTH = 10
 # add missing bangla punctuation
 punctuation = punctuation + '।'
 def ben_tokenizer(sentence):
@@ -23,11 +23,15 @@ def ben_tokenizer(sentence):
     return list_
 
 if __name__ == "__main__":
-    helper = Helper(lang1='eng', lang2='ben', reverse=True, max_length=10)
+
+    config = configparser.ConfigParser()
+    config.read('experiment.ini')
+    config = initialize_env(dict(config['DEFAULT']))
+    helper = Helper(lang1=config['lang1'], lang2=config['lang2'], reverse=config['reverse'], max_length=config['max_length'])
     eng_tokenizer = spacy.load("en_core_web_sm")
 
-    train_data = helper.read_langs('/content/drive/My Drive/CSE299/en_bn_corpus/supara_en_bn.txt')
-    dev_data = helper.read_langs('/content/drive/My Drive/CSE299/en_bn_corpus/tatoeba_en_bn.txt')
+    train_data = helper.read_langs(config['train_path'])
+    dev_data = helper.read_langs(config['eval_path'])
     train_data = helper.filter_pairs(train_data)
     dev_data = helper.filter_pairs(dev_data)
 
@@ -52,11 +56,12 @@ if __name__ == "__main__":
     train_data = helper.padding(train_data, input_lang.pad_token)
     dev_data = helper.padding(dev_data, input_lang.pad_token)
 
-    encoder = Encoder(input_lang.n_words, 300, padding_idx=input_lang.pad_token, \
-                  bidirectional=True)
-    decoder = Decoder(output_lang.n_words, 300, padding_idx=output_lang.pad_token,\
-                  bidirectional=True)
+    encoder = Encoder(input_lang.n_words, config['hidden_size'], padding_idx=input_lang.pad_token, \
+                  bidirectional=config['bidirectional'])
+    decoder = Decoder(output_lang.n_words, config['hidden_size'], padding_idx=output_lang.pad_token,\
+                  bidirectional=config['bidirectional'])
 
-    pred_= Predict(MAX_LENGTH, input_lang, output_lang, helper, 8000)
-    train = TrainModel(MAX_LENGTH, input_lang.sos_token, batch_size=8000, epochs=20, learning_rate=0.0001, path="/content/snap", snapshot='/content/snap/model10.pt')
+    snapshot = None if config['checkpoint'] == False else config['checkpoint']
+    pred_= Predict(config['max_length'], input_lang, output_lang, helper, config['batch_size'])
+    train = TrainModel(config['max_length'], input_lang.sos_token, batch_size=config['batch_size'], epochs=config['epochs'], learning_rate=config['learning_rate'], path=config['root'], snapshot=snapshot)
     train.train_epochs(encoder,decoder, train_data, dev_data, pred_)
