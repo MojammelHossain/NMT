@@ -1,11 +1,13 @@
-"""Copyright"""
+import os
 import copy
 import torch
+import pickle
 import numpy as np
 from language import Lang
 
 
 def initialize_env(config):
+    os.mkdir(config['root'])
     config['batch_size'] = int(config['batch_size'])
     config['bidirectional'] = True if config['bidirectional'] == 'true' else False
     config['checkpoint'] = False if config['checkpoint'] == 'false' else config['checkpoint']
@@ -113,26 +115,29 @@ class Helper:
         return (input_tensor, target_tensor)
 
 
-    def prepare_data(self, pairs, occurence=None):
+    def prepare_data(self, pairs, occurence=None, load=None):
         """prepare data for model"""
 
         pairs = self.filter_pairs(pairs)
         print("Trimmed to %s sentence pairs as per max_length\n" % len(pairs))
 
-        for pair in pairs:
-            self.input_lang.add_sentence(pair[0])
-            self.output_lang.add_sentence(pair[1])
+        if load == None:
+            for pair in pairs:
+                self.input_lang.add_sentence(pair[0])
+                self.output_lang.add_sentence(pair[1])
+
+            if occurence != None:
+                self.input_lang.most_common_words(5)
+                self.output_lang.most_common_words(5)
+                print("Most common words:")
+                print(self.input_lang.name, self.input_lang.n_words)
+                print(self.output_lang.name, self.output_lang.n_words)
+        else:
+            self.load_lang_object(load)
 
         print("Counted words:")
         print(self.input_lang.name, self.input_lang.n_words)
         print(self.output_lang.name, self.output_lang.n_words)
-
-        if occurence != None:
-            self.input_lang.most_common_words(5)
-            self.output_lang.most_common_words(5)
-            print("Most common words:")
-            print(self.input_lang.name, self.input_lang.n_words)
-            print(self.output_lang.name, self.output_lang.n_words)
 
         pair_tensors = copy.deepcopy(pairs)
         for i, _ in enumerate(pair_tensors):
@@ -161,3 +166,15 @@ class Helper:
             pair_tensors[i][1] = self.padding_sentence(pair_tensors[i][1], \
                                                        pad_token)
         return np.array(pair_tensors)
+
+    def save_lang_object(self, path):
+        with open((path+'/input_lang.pkl'), 'wb') as output:
+            pickle.dump(self.input_lang, output, pickle.HIGHEST_PROTOCOL)
+        with open((path+'/output_lang.pkl'), 'wb') as output:
+            pickle.dump(self.output_lang, output, pickle.HIGHEST_PROTOCOL)
+
+    def load_lang_object(self, path):
+        with open((path+'/input_lang.pkl'), 'rb') as input:
+            self.input_lang = pickle.load(input)
+        with open((path+'/output_lang.pkl'), rb) as input:
+            self.output_lang = pickle.load(input)

@@ -133,7 +133,7 @@ class TrainModel:
     val_score=[0]
 
     if self.snapshot != None:
-      print('loading model from : {}'.format{self.snapshot})
+      print('loading model from : {}'.format(self.snapshot))
       checkpoint = torch.load(self.snapshot)
       total_epoch = checkpoint['epochs']
       encoder.load_state_dict(checkpoint['encoder'])

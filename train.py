@@ -42,7 +42,8 @@ if __name__ == "__main__":
         dev_data[i][0] = ben_tokenizer(pair[0])
         dev_data[i][1] = [token.text for token in eng_tokenizer(pair[1].lower())]
 
-    input_lang, output_lang, pairs, train_data = helper.prepare_data(train_data)
+    load = None if config['obj_path'] == False else config['obj_path']
+    input_lang, output_lang, pairs, train_data = helper.prepare_data(train_data, load=config['obj_path'])
 
 
     dev_data = helper.filter_pairs(dev_data)
@@ -61,6 +62,8 @@ if __name__ == "__main__":
     decoder = Decoder(output_lang.n_words, config['hidden_size'], padding_idx=output_lang.pad_token,\
                   bidirectional=config['bidirectional'])
 
+    print("Saving language objects: {}".format(config['root']))
+    helper.save_lang_object(config['root'])
     snapshot = None if config['checkpoint'] == False else config['checkpoint']
     pred_= Predict(config['max_length'], input_lang, output_lang, helper, config['batch_size'])
     train = TrainModel(config['max_length'], input_lang.sos_token, batch_size=config['batch_size'], epochs=config['epochs'], learning_rate=config['learning_rate'], path=config['root'], snapshot=snapshot, eval_frequency=config['eval_frequency'])
