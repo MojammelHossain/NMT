@@ -44,6 +44,7 @@ class TrainModel:
     self.epochs = kargs['epochs'] if 'epochs' in kargs.keys() else 1
     self.path = kargs['path'] if 'path' in kargs.keys() else 'C:/'
     self.snapshot = kargs['snapshot']
+    self.eval_frequency = kargs['eval_frequency']
     self.criterion = nn.NLLLoss()
     self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -132,7 +133,7 @@ class TrainModel:
     val_score=[0]
 
     if self.snapshot != None:
-      print('loading model')
+      print('loading model from : {}'.format{self.snapshot})
       checkpoint = torch.load(self.snapshot)
       total_epoch = checkpoint['epochs']
       encoder.load_state_dict(checkpoint['encoder'])
@@ -146,17 +147,16 @@ class TrainModel:
 
             loss = self.train_batches(encoder, encoder_optimizer, decoder, \
                                       decoder_optimizer, train_dataloader)
-            if (epoch) % 10 == 0:
-              t.set_description("loss %s" % loss)
-              checkpoint_epoch += 10
+            if (epoch) % self.eval_frequency == 0:
+              checkpoint_epoch += self.eval_frequency
               train_predict = pred_.predict_dataset(encoder, decoder, train_data)
               if dev_data is None:
+                t.set_description("loss %s" % loss)
                 print('Please provide a dev set for visualize the plot')
               else:
                 dev_predict = pred_.predict_dataset(encoder, decoder, dev_data)
-                train_score.append(bleu_score(train_predict[1], train_predict[0]))
-                val_score.append(bleu_score(dev_predict[1], dev_predict[0]))
-                plot(train_scor=train_score, val_scor=val_score, epoch=checkpoint_epoch)
+                bleu = bleu_score(dev_predict[1], dev_predict[0])
+                t.set_description("loss {}, bleu {}".format(loss, bleu))
               
               path = self.path + "/model" + str(total_epoch+epoch) +".pt"
               save_model(checkpoint_epoch+total_epoch, encoder, decoder, encoder_optimizer, decoder_optimizer, path)
@@ -164,5 +164,3 @@ class TrainModel:
         # Code to "save"
         print('save model')
         save_model(checkpoint_epoch+total_epoch, encoder, decoder, encoder_optimizer, decoder_optimizer, path)
-    path = self.path+"/model" + str(total_epoch+self.epochs) +".pt"
-    save_model(total_epoch+self.epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, path)

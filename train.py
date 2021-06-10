@@ -63,5 +63,5 @@ if __name__ == "__main__":
 
     snapshot = None if config['checkpoint'] == False else config['checkpoint']
     pred_= Predict(config['max_length'], input_lang, output_lang, helper, config['batch_size'])
-    train = TrainModel(config['max_length'], input_lang.sos_token, batch_size=config['batch_size'], epochs=config['epochs'], learning_rate=config['learning_rate'], path=config['root'], snapshot=snapshot)
+    train = TrainModel(config['max_length'], input_lang.sos_token, batch_size=config['batch_size'], epochs=config['epochs'], learning_rate=config['learning_rate'], path=config['root'], snapshot=snapshot, eval_frequency=config['eval_frequency'])
     train.train_epochs(encoder,decoder, train_data, dev_data, pred_)

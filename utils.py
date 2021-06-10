@@ -1,5 +1,6 @@
 """Copyright"""
 import copy
+import torch
 import numpy as np
 from language import Lang
 
@@ -14,6 +15,7 @@ def initialize_env(config):
     config['epochs'] = int(config['epochs'])
     config['learning_rate'] = float(config['learning_rate'])
     config['hidden_size'] = int(config['hidden_size'])
+    config['eval_frequency'] = int(config['eval_frequency'])
     return config
 
 def save_model(epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, path):
@@ -23,7 +25,7 @@ def save_model(epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, p
             'decoder': decoder.state_dict(),
             'encoder_optimizer': encoder_optimizer.state_dict(),
             'decoder_optimizer': decoder_optimizer.state_dict()
-          }, self.path)
+          }, path)
 
 class Helper:
     """helper class for reading data and create word bank"""
