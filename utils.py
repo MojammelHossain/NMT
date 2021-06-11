@@ -7,10 +7,14 @@ from language import Lang
 
 
 def initialize_env(config):
-    os.mkdir(config['root'])
+    try:
+        os.mkdir(config['root'])
+    except:
+        print("Directory found!!!!")
+
     config['batch_size'] = int(config['batch_size'])
     config['bidirectional'] = True if config['bidirectional'] == 'true' else False
-    config['checkpoint'] = False if config['checkpoint'] == 'false' else config['checkpoint']
+    config['checkpoint'] = None if config['checkpoint'] == 'false' else config['checkpoint']
     config['reverse'] = True if config['reverse'] == 'true' else False
     config['rnn'] = 'LSTM' if config['rnn'] == 'lstm' else 'GRU'
     config['max_length'] = int(config['max_length'])
@@ -18,6 +22,7 @@ def initialize_env(config):
     config['learning_rate'] = float(config['learning_rate'])
     config['hidden_size'] = int(config['hidden_size'])
     config['eval_frequency'] = int(config['eval_frequency'])
+    config['obj_path'] = None if config['obj_path'] == 'false' else config['obj_path']
     return config
 
 def save_model(epochs, encoder, decoder, encoder_optimizer, decoder_optimizer, path):
@@ -168,6 +173,7 @@ class Helper:
         return np.array(pair_tensors)
 
     def save_lang_object(self, path):
+        print("Loading language objects from : {}/".format(path))
         with open((path+'/input_lang.pkl'), 'wb') as output:
             pickle.dump(self.input_lang, output, pickle.HIGHEST_PROTOCOL)
         with open((path+'/output_lang.pkl'), 'wb') as output:
