@@ -173,14 +173,14 @@ class Helper:
         return np.array(pair_tensors)
 
     def save_lang_object(self, path):
-        print("Loading language objects from : {}/".format(path))
         with open((path+'/input_lang.pkl'), 'wb') as output:
             pickle.dump(self.input_lang, output, pickle.HIGHEST_PROTOCOL)
         with open((path+'/output_lang.pkl'), 'wb') as output:
             pickle.dump(self.output_lang, output, pickle.HIGHEST_PROTOCOL)
 
     def load_lang_object(self, path):
+        print("Loading language objects from : {}/".format(path))
         with open((path+'/input_lang.pkl'), 'rb') as input:
             self.input_lang = pickle.load(input)
-        with open((path+'/output_lang.pkl'), rb) as input:
+        with open((path+'/output_lang.pkl'), 'rb') as input:
             self.output_lang = pickle.load(input)

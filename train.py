@@ -62,8 +62,9 @@ if __name__ == "__main__":
     decoder = Decoder(output_lang.n_words, config['hidden_size'], padding_idx=output_lang.pad_token,\
                   bidirectional=config['bidirectional'])
 
-    print("Saving language objects: {}/".format(config['root']))
-    helper.save_lang_object(config['root'])
+    if config['obj_path'] == None:
+        print("Saving language objects: {}/".format(config['root']))
+        helper.save_lang_object(config['root'])
     pred_= Predict(config['max_length'], input_lang, output_lang, helper, config['batch_size'])
     train = TrainModel(config['max_length'], input_lang.sos_token, batch_size=config['batch_size'], epochs=config['epochs'], learning_rate=config['learning_rate'], path=config['root'], snapshot=config['checkpoint'], eval_frequency=config['eval_frequency'])
     train.train_epochs(encoder,decoder, train_data, dev_data, pred_)
