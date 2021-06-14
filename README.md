@@ -12,4 +12,12 @@ Install the following if not installed.
 * torch cuda version
 * scarceblue
 * configparser
+
+## Training
+* Keep your preprocess data in the `data` folder check out the `sample.txt` for data format.
+* Change the appropriate variable inside `experiment.ini` i.e. `lang1, rnn, hidden_size`.
+* `reverse` a `bool` variable will change the model training i.e. `BN->EN` to `EN->BN`
+* Training: `python train.py`
+
+### Resumming Training
 `language.py` and trainer `trainer.py` class.
