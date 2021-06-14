@@ -1,4 +1,3 @@
-"""Copyright"""
 import copy
 import numpy as np
 from .language import Lang

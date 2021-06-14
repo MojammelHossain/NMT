@@ -1,5 +1,3 @@
-"""Copyright"""
-
 class Lang:
     """Base class for create language wordbook
 
